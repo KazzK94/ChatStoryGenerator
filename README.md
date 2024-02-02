@@ -1,6 +1,8 @@
 # Chat Story Generator
 Chat Story Generator (o CSG) es un generador de conversaciones fake de chat, con una sintaxis de entrada muy sencilla de usar sin necesidad de conocimientos técnicos.
 
+Entra en https://chat-story-generator.netlify.app/ para empezar a usarlo
+
 ## Modo de uso
 Para hacer uso del programa, sigue los siguientes pasos:
 
@@ -16,11 +18,13 @@ Si en lugar de ajustar la altura quieres que se vea toda la conversación en una
 ### Convertir a Chat	
 Pulsa el botón azul de "Convertir a chat" (este paso es fundamental, ya que el programa saca un "pantallazo" de lo que se ve en ese momento en el chat, y si el chat de la derecha está vacío saldrá un chat en blanco en la imagen).
 
+#### Errores de sintaxis
+Se añadirá que salte una alerta cuando se intente convertir un chat con errores de sintaxis.
+
 ### Exportar a Imagen
 Finalmente, ya con el chat en la preview del lado derecho, simplemente pulsa el botón de "Exportar a imagen". La imagen se generará abajo del todo (tendrás que hacer scroll hacia abajo para verla). Si quieres guardar la imagen, haz clic derecho sobre ella y "Guardar imagen como..."
 
 En caso de generar una imagen errónea, puedes mantener pulsada la tecla Ctrl y hacer doble click sobre la imagen para eliminarla (recuerda que las imágenes aparecen en la parte inferior, y que el lado derecho de la parte superior sólo es una preview del resultado final).
-
 
 ## Modo Desarrollador (sólo para desarrolladores)
 Para quien necesite los datos en formato JSON, puede activar el modo desarrollador clicando 7 veces sobre el título de la página. Saltará un alert indicando que ya se ha habilitado el Modo Desarrollador. Ahora, haciendo scroll a la parte más baja de la página, se podrá ver el JSON Output correspondiente a la historia que se ha cargado. Esta información se actualiza al pulsar el botón "Convertir a Chat".
@@ -29,6 +33,11 @@ Para los no desarrolladores, no hay problema si activáis este modo, pero no cre
 
 
 ## Ideas de cara a futuro
+
+### Resolver Bugs
+
+#### Deformación en la imagen si no es cuadrada
+El estilo de "object-fit: cover" no se aplica correctamente en el canvas, por lo que la imagen queda deformada.
 
 ### Funcionalidades Adicionales de Exportar Imagen (automatizadas)
 Se pretende mover el botón de "Exportar a imagen" junto a los otros dos botones, aunque éste alineado a la derecha.
@@ -45,6 +54,9 @@ Se ha considerado añadir una UI mostrando un manual de instrucciones para usar 
 
 ### Rediseño de la UI (de cara a futuro)
 Se ha pensado en tener varias pestañas para el contenido principal de la página, mostando en la pestaña principal los campos de entrada de texto (lado izquierdo) y la preview (lado derecho) además de los errores de sintaxis, y en una segunda pestaña todas las imágenes que se han generado en base a las exportaciones a imagen.
+
+#### Boto del texto de ejemplo
+Se reubicará este botón a un lugar en el que quede más claro que no es una funcionalidad principal del programa.
 
 #### Estilos
 Se pretende modificar los estilos para que resulten en una página más agradable a la vista.
