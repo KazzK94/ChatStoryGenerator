@@ -231,7 +231,7 @@ function App() {
 
 			{/* PARTE INFERIOR (ERRORES) */}
 			{
-				devMode && (
+				errors && errors.length > 0 && (
 					<div className='outerContainer'>
 						<div>
 							<h2>SYNTAX ERRORS</h2>
