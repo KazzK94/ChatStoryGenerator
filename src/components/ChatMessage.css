@@ -1,0 +1,60 @@
+
+.messageContainer {
+	width: 100%;
+	display: inline-block;
+	margin-top: 8px;
+}
+
+
+.message {
+	border-radius: 12px;
+	max-width: 70%;
+	padding: 8px 12px;
+}
+
+/* MESSAGE FOR SELF (RIGHT) */
+.messageSelf {
+	float:right;
+	margin-right: 16px;
+	border: 1px solid #CCE8B6;
+	background-color: #DAF6C4;
+}
+
+/* MESSAGE FOR OTHER USERS (LEFT) */
+.messageOther {
+	float:left;
+	margin-left: 16px;
+	text-align: left;
+	border: 1px solid #EEE;
+	background-color: #FFF;
+}
+
+/* MESSAGE FOR EVENTS (CENTER) */
+.messageEvent {
+	width: 50%;
+	margin: 4px auto;
+	padding: 4px 8px;
+	text-align: center;
+	border: 1px solid #CCC;
+	background-color: #EEE;
+	border-radius: 50px;
+}
+
+p.messageName {
+	text-align: left;
+	font-weight : bold;
+	font-size: 16px;
+	margin-bottom: 1px;
+}
+
+p.messageText {
+	font-size: 14px;
+	margin-bottom: 2px;
+}
+
+.eventContainer {
+	background-color: rgba(0,0,0,0.06);
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 6px;
+}
