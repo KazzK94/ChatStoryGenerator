@@ -30,13 +30,13 @@ export function parseStory({ protagonist, rawInput }) {
 			return
 		}
 		// Check if it's a Message (a character speaking)
-		if (~line.indexOf(':') && line.indexOf(':') !== line.length - 1) {
+		if (~line.indexOf(': ') && line.indexOf(': ') !== line.length - 1 && line.indexOf(':') !== 0) {
 			// Split message by the ':' to find the name at the left
-			line = line.split(':')
+			line = line.split(': ')
 			// Obtain the username (and remove it from the array)
 			const username = line.shift()
 			// Message = array joining by ':' just in case the message contained some colon
-			const message = line.join(':').trim()
+			const message = line.join(': ').trim()
 
 			// Check if it's the protagonist
 			const isProtagonist = username === protagonist
