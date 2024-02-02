@@ -234,7 +234,7 @@ function App() {
 				errors && errors.length > 0 && (
 					<div className='outerContainer'>
 						<div>
-							<h2>SYNTAX ERRORS</h2>
+							<h2>ERRORES DE SINTAXIS</h2>
 							<div className='errorLog'>
 								<ul>
 									{
