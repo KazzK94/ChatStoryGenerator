@@ -210,24 +210,22 @@ function App() {
 				{/* PARTE INFERIOR (ERRORES) */}
 				{
 					errors && errors.length > 0 && (
-						<div className='outerContainer'>
-							<div>
-								<h2>ERRORES DE SINTAXIS</h2>
-								<div className='errorLog'>
-									<ul>
-										{
-											errors.map((inputError, index) => {
-												return (
-													<li key={`error-${index}`}>
-														Error de sintaxis en la <b>Línea {inputError.line} (la {inputError.lineFromBottom}ª desde abajo)</b>:
-														"{inputError.text || '(línea vacía)'}"
-													</li>
-												)
+						<div>
+							<h2>ERRORES DE SINTAXIS</h2>
+							<div className='errorLog'>
+								<ul>
+									{
+										errors.map((inputError, index) => {
+											return (
+												<li key={`error-${index}`}>
+													Error de sintaxis en la <b>Línea {inputError.line} (la {inputError.lineFromBottom}ª desde abajo)</b>:
+													"{inputError.text || '(línea vacía)'}"
+												</li>
+											)
 
-											})
-										}
-									</ul>
-								</div>
+										})
+									}
+								</ul>
 							</div>
 						</div>
 					)

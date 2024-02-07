@@ -51,7 +51,11 @@ body {
 }
 
 .errorLog {
-	color: rgb(180, 35, 35);
+	color: rgb(241, 142, 142);
+	background-color: darkred;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	padding: 1px 1em;
 	font-size: 1.5em;
 }
 
