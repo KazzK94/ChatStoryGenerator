@@ -156,14 +156,14 @@ function App() {
 			</Header>
 
 			<main className='container'>
-				<div className='outerContainer'>
+				<div className='outerContainer grid-lg-1-auto gap-32'>
 					{/* LADO IZQUIERDO (form) */}
 					<section className='storyInput'>
 						{/* Hidden input to handle the Group Image change (when clicking on the image in the chat header) */}
 						<input id='changeGroupImage' className='hidden' onChange={handleGroupImageChange} type='file' />
 
 						<fieldset>
-							<div className='grid-lg-2 grid-xl-3'>
+							<div className='grid-lg-2 grid-xl-3 gap-20'>
 								<FormField id='groupId' title='Nombre del grupo' value={groupName} onChange={handleGroupNameInputChange} placeholder='Grupo de amigos' />
 								<FormField id='protagonist' title='Protagonista' value={protagonist} onChange={handleProtagonistChange} placeholder='Harry Potter' />
 								<FormField id='chatHeight' title='Altura del chat (en px)' value={chatHeight} onChange={handleChatHeightChange} disabled={chatIsFullHeight} />
@@ -185,7 +185,7 @@ function App() {
 
 
 					{/* RIGHT SIDE (preview) */}
-					<section>
+					<section className='chatPreview center-content'>
 						{/* Conversation (all chat here) */}
 						<Conversation
 							height={chatIsFullHeight ? 'auto' : chatHeight}
