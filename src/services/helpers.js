@@ -74,13 +74,17 @@ export function parseStory({ protagonist, rawInput }) {
 
 }
 
-export const textareaPlaceholder = `Ash: Venga, Pikachu, vuelve a tu pokéball.
-Pikachu: ¿Piká?
-Ash: Ni piká ni leches, a tu pokéball he dicho. Que ya son las 3:20 y mañana madrugamos.
-Pikachu: ¡Pikapiii!
-Ash: ¿Qué me has llamado? Como te coja vas a ver...
-Misty: Ash, te tienes que ver la de Cómo Entrenar a tu Pokémon. A ver si aprendes.
-Ash: Mira, no estoy para bromas. Y tú, ¡a la pokéball, YA!
-Pikachu: Pika...
-*Pikachu regresa a su pokéball*
-Ash: Cómo cuestan de criar, la virgen...`
+export const textareaPlaceholder = `Ron: Venga, vamos a practicar unos leviosás.
+Hermione: Es "leviosa", no "leviosá". Te lo tengo dicho...
+Harry: Eh, Ron, haz caso a Hermione. Yo una vez dije mal el nombre de un callejón y por poco no lo cuento.
+Ron: ¿En serio? ¿Por trabarte?
+Harry: ¡¡Pero si tú también estabas!! ¿No te acuerdas? El "callejondigón".
+Ron: JAJAJAJAJAJA ay, ya me he acordado. Tío, es que... ¡Es el Callejón Diagón! Mira que era fácil.
+Hermione: Dijo el del "leviosá"...
+*Ron resopla contundentemente.*
+Harry: Venga, arriba esas varitas. ¡A practicar!
+Hermione: ¡Ya era hora!`
+
+export const protagonistPlaceholder = 'Harry'
+
+export const groupNamePlaceholder = 'Escuela de majos'

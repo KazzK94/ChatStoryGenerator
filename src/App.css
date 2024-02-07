@@ -1,6 +1,18 @@
 :root {
-	--chat-header-height: 72px;
-	--chat-content-height: 700px
+	/* Body (global) */
+	--body-background: linear-gradient(135deg, #2d4b6a, #436);
+	--body-text-color: #fff;
+	--font-family: system-ui, Arial, sans-serif;
+
+	/* Header */
+	--header-height: 92px;
+
+	/* Chat */
+	--chat-header-height: 64px;
+
+	/* Form */
+	--input-background-color: #8886;
+	--input-text-color: #fff;
 }
 
 * {
@@ -9,88 +21,28 @@
 
 body {
 	margin: 0;
-	background-color: #CCC;
+	background: var(--body-background) fixed;
+	color: var(--body-text-color);
+	font-family: var(--font-family);
 }
 
-
-h1 {
-	text-align: center;
-	margin-top: 12px;
+.container {
+	max-width: 1280px;
+	margin: auto;
 }
-
 
 .outerContainer {
 	display: grid;
 	grid-template-columns: 1fr auto;
-	gap: 60px;
+	gap: 32px;
 	justify-content: space-around;
-	padding: 0 40px;
+	margin: auto;
+	min-height: 85vh;
 }
 
-h2 {
-	margin-bottom: 20px;
-}
-
-input[type=text], input[type=number] {
-	width: 300px;
-	border-radius: 6px;
-	border: 1px solid black;
-	padding: 2px 4px;
-}
-
-/* TEXT AREA (INPUT) */
-textarea {
-	height: 500px;
-	width: 100%;
-	background-color: #EEE;
-	padding: 8px 10px;
-	border-radius: 4px;
-}
-
-/* CHAT (OUTPUT) */
-.chatOutput {
-	background-image: url("/src/assets/chatBackground.png") !important;
-	width: 650px;
-	/* prevent canvas from breaking spaces between words */
-	letter-spacing: 0.01px;
-}
-
-.chatHeader {
-	display: flex;
-	align-items: center;
-	height: var(--chat-header-height);
-	padding-left: 20px;
-	background-color: #eee;
-	border-bottom: 2px solid #0003;
-}
-
-.chatHeader .groupImage {
-	float: left;
-	width: 50px;
-	height: 50px;
-	border: 2px solid #bbb;
-	border-radius: 50%;
-	object-fit: cover;
-}
-
-.chatHeader .groupName {
-	font-weight: bold;
-	font-size: 1.7em;
-	margin-bottom: 2px;
-	padding-left: 12px;
-}
-
-.chatOutput .conversationContainer {
-	overflow-y: scroll;
-	padding-top: 12px;
-	padding-bottom: 8px;
-
-	/* Hiding scrollbar (for all browsers) */
-	&::-webkit-scrollbar {
-		display: none;
-	}
-	-ms-overflow-style: none;
-	scrollbar-width: none;
+.storyInput {
+	display: grid;
+	grid-template-rows: auto 1fr;
 }
 
 .exportToImage {
@@ -99,7 +51,7 @@ textarea {
 }
 
 .errorLog {
-	color: red;
+	color: rgb(180, 35, 35);
 	font-size: 1.5em;
 }
 
@@ -109,4 +61,53 @@ textarea {
 	row-gap: 20px;
 	justify-content: space-around;
 	margin: 40px auto;
+}
+
+.hidden {
+	display: none;
+}
+
+.preventSelect {
+	-webkit-user-select: none;
+	/* Safari */
+	-ms-user-select: none;
+	/* IE 10 and IE 11 */
+	user-select: none;
+	/* Standard syntax */
+}
+
+fieldset {
+	border: none;
+}
+
+#fullHeightToggle {
+	margin-left: 8px;
+}
+
+button.exportToImage {
+	float: right;
+	margin-top: 8px;
+}
+
+textarea:focus {
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+	padding: 3px 0px 3px 3px;
+	margin: 5px 1px 3px 0px;
+	border: 1px solid rgba(81, 203, 238, 1);
+}
+
+@media (width >= 992px) {
+	.grid-lg-2 {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+	}
+}
+
+@media (width >= 1200px) {
+	.grid-xl-3 {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 20px;
+	}
 }

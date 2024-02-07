@@ -12,17 +12,19 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useRef, useState } from 'react'
 
 // Components
-// import { ChatMessage, ChatEvent } from './components/ChatMessage'
+import Conversation from './components/chat/Conversation.jsx'
+import FormField from './components/form/FormField.jsx'
+import Header from './components/structure/Header.jsx'
+import Button from './components/basics/Button.jsx'
 
 // Services
-import { parseStory, textareaPlaceholder } from './services/helpers'
-import { ChatEvent, ChatMessage } from './components/ChatMessage'
+import { parseStory, textareaPlaceholder, protagonistPlaceholder, groupNamePlaceholder } from './services/helpers.js'
 
 
 function App() {
 
 	const chatRef = useRef()
-	const rawInputTextAreaRef = useRef()
+	const [rawInput, setRawInput] = useState('')
 	const imageExportsRef = useRef()
 
 	const stepsToDevMode = useRef(7)
@@ -33,7 +35,7 @@ function App() {
 	const [protagonist, setProtagonist] = useState('')
 	// Chat height (customizable)
 	const [chatHeight, setChatHeight] = useState(700)
-	const [chatFullHeight, setChatFullHeight] = useState(false)
+	const [chatIsFullHeight, setChatFullHeight] = useState(false)
 	// Dev Mode
 	const [devMode, setDevMode] = useState(false)
 
@@ -43,26 +45,58 @@ function App() {
 	// Error Log
 	const [errors, setErrors] = useState([])
 
+	const handleLoadDefaultStory = () => {
+		setRawInput(textareaPlaceholder)
+		setGroupName(groupNamePlaceholder)
+		setProtagonist(protagonistPlaceholder)
+		handleParseStory({ newRawInput: textareaPlaceholder })
+	}
+
 	const handleGroupNameInputChange = (event) => {
 		const newGroupName = event.target.value
 		setGroupName(newGroupName)
+		return false
 	}
 
 	const handleProtagonistChange = (event) => {
-		const newProtagonistName = event.target.value
-		setProtagonist(newProtagonistName)
+		const newProtagonist = event.target.value
+		setProtagonist(newProtagonist)
+		handleParseStory({ newProtagonist })
+		return false
+	}
+
+	const handleRawInputChange = (event) => {
+		const newRawInput = event.target.value
+		setRawInput(newRawInput)
+		handleParseStory({ newRawInput })
+		return false
 	}
 
 	const handleChatHeightChange = (event) => {
 		const newChatHeight = Number(event.target.value)
 		setChatHeight(newChatHeight)
+		return false
 	}
 
 	const handleToggleChatFullHeight = () => {
-		setChatFullHeight(!chatFullHeight)
+		setChatFullHeight(!chatIsFullHeight)
+		return false
+	}
+
+	const handleGroupImageChange = (event) => {
+		// Create a FileReader (to read an image)
+		const reader = new FileReader()
+		// When it loads (async) set the new group image
+		reader.onload = function () {
+			// Set Group image
+			setGroupImageUrl(reader.result)
+		}
+		// This will read data async, and once done it'll trigger the above function "onload"
+		reader.readAsDataURL(event.target.files[0])
 	}
 
 	const handleStepUpTowardsDevMode = () => {
+		if (devMode) return false
 		stepsToDevMode.current -= 1
 		if (stepsToDevMode.current <= 0) {
 			setDevMode(true)
@@ -103,23 +137,10 @@ function App() {
 		})
 	}
 
-	const handleGroupImageChange = (event) => {
-		// Create a FileReader (to read an image)
-		const reader = new FileReader()
-		// When it loads (async) set the new group image
-		reader.onload = function () {
-			// Set Group image
-			setGroupImageUrl(reader.result)
-		}
-		// This will read data async, and once done it'll trigger the above function "onload"
-		reader.readAsDataURL(event.target.files[0])
-	}
-
-	const handleParseStory = () => {
-		const rawInput = rawInputTextAreaRef.current.value
+	const handleParseStory = ({ newRawInput, newProtagonist }) => {
 		const newStoryData = parseStory({
-			rawInput,
-			protagonist
+			rawInput: newRawInput || rawInput,
+			protagonist: newProtagonist || protagonist
 		})
 		setErrors(newStoryData.errors)
 		setStoryData(newStoryData.story)
@@ -127,150 +148,109 @@ function App() {
 
 	return (
 		<>
-			<h1 onClick={handleStepUpTowardsDevMode}>Chat Story Generator</h1>
-			<hr />
+			<Header
+				onTitleClick={handleStepUpTowardsDevMode}
+				onLoadDefaultStory={handleLoadDefaultStory}
+			>
+				Chat Story Generator
+			</Header>
 
-			<div className='outerContainer'>
-				{/* LADO IZQUIERDO (form) */}
-				<section className='storyInput'>
-					<h2>Input para la historia</h2>
-					<p>
-						<b>Nombre del grupo:</b>
-						&nbsp;&nbsp;
-						<input id='input-group-title' type='text' value={groupName} onChange={handleGroupNameInputChange} placeholder='Nombre del Grupo' />
-					</p>
-					<p>
-						<b>Protagonista (opcional):</b>
-						&nbsp;&nbsp;
-						<input id='input-main-character' type='text' value={protagonist} onChange={handleProtagonistChange} placeholder='Helen' />
-					</p>
-					<p>
-						<b>Altura del chat (en px):</b>
-						&nbsp;&nbsp;
-						<input id='chat-height' type='number' value={chatHeight} onChange={handleChatHeightChange} placeholder='700' disabled={chatFullHeight} />
-						<br />
-						<label>
-							<input type='checkbox' name='fullHeight' value={chatFullHeight} onClick={handleToggleChatFullHeight} /> Mostrar conversación completa (altura máxima)
-						</label>
-					</p>
-					<p>
-						<b>Cambiar imagen del grupo:</b> &nbsp; <input onChange={handleGroupImageChange} type='file' />
-					</p>
+			<main className='container'>
+				<div className='outerContainer'>
+					{/* LADO IZQUIERDO (form) */}
+					<section className='storyInput'>
+						{/* Hidden input to handle the Group Image change (when clicking on the image in the chat header) */}
+						<input id='changeGroupImage' className='hidden' onChange={handleGroupImageChange} type='file' />
 
-					<textarea
-						id='story'
-						ref={rawInputTextAreaRef}
-						placeholder={textareaPlaceholder}
-					/>
+						<fieldset>
+							<div className='grid-lg-2 grid-xl-3'>
+								<FormField id='groupId' title='Nombre del grupo' value={groupName} onChange={handleGroupNameInputChange} placeholder='Grupo de amigos' />
+								<FormField id='protagonist' title='Protagonista' value={protagonist} onChange={handleProtagonistChange} placeholder='Harry Potter' />
+								<FormField id='chatHeight' title='Altura del chat (en px)' value={chatHeight} onChange={handleChatHeightChange} disabled={chatIsFullHeight} />
+							</div>
+							<FormField type='checkbox' id='fullHeightToggle' title='Mostrar conversación completa (altura automática)' value={chatIsFullHeight} onChange={handleToggleChatFullHeight} />
+						</fieldset>
 
-					<button id='convert' onClick={handleParseStory} className='btn btn-primary'>Convertir a chat</button>
-					&nbsp;&nbsp;
-					<button
-						id='loadDefaultText'
-						className='btn btn-secondary'
-						onClick={() => {
-							if (confirm('¿Quieres cargar el texto de ejemplo? Tu texto actual se borrará.')) {
-								rawInputTextAreaRef.current.value = textareaPlaceholder
-								setGroupName('Cómo entrenar a tu Pokémon')
-								setTimeout(() => {
-									alert('Texto cargado. Recuerda "Convertir a chat" antes de exportarlo a imagen.')
-								}, 200)
-							}
-						}}
-					>
-						Cargar texto de ejemplo
-					</button>
-				</section>
+						<fieldset>
+							<FormField
+								type='textarea'
+								id='story'
+								value={rawInput}
+								placeholder={textareaPlaceholder}
+								onChange={handleRawInputChange}
+								containerStyle={{ height: '100%', paddingBottom: '20px' }}
+							/>
+						</fieldset>
+					</section>
 
 
-				{/* LADO DERECHO (preview) */}
-				<section>
-					{/* CHAT */}
-					<div className='chatOutput' ref={chatRef}>
-						<div className='chatHeader'>
-							<img className='groupImage' src={groupImageUrl} />
-							<p className='groupName'>{groupName}</p>
-						</div>
-
-						<div id='conversationContainer' className='conversationContainer' style={{ height: chatFullHeight ? 'auto' : chatHeight }}>
-							{
-								storyData.map((messageOrEvent, index) => {
-									return messageOrEvent.type === 'message'
-										? (
-											<ChatMessage
-												key={`message-${index}`}
-												username={messageOrEvent.username}
-												isSelf={messageOrEvent.username === protagonist}
-												color={messageOrEvent.color}
-											>
-												{messageOrEvent.message}
-											</ChatMessage>
-										)
-										: messageOrEvent.type === 'event'
-											? (
-												<ChatEvent key={`event-${index}`}>
-													{messageOrEvent.message}
-												</ChatEvent>
-											)
-											: null
-								})
-							}
-						</div>
-					</div>
-
-					<button type='button' className='btn btn-dark exportToImage' onClick={handleExportToImage}>Exportar a Imagen</button>
-				</section>
-			</div>
+					{/* RIGHT SIDE (preview) */}
+					<section>
+						{/* Conversation (all chat here) */}
+						<Conversation
+							height={chatIsFullHeight ? 'auto' : chatHeight}
+							protagonist={protagonist}
+							storyData={storyData}
+							chatRef={chatRef}
+							groupImageUrl={groupImageUrl}
+							groupName={groupName}
+						/>
+						{/* Button to export chat html to image */}
+						<Button type='button' className='exportToImage' onClick={handleExportToImage}>Exportar a Imagen</Button>
+					</section>
+				</div>
 
 
-			<br /><br />
-			<br /><br />
+				<br /><br />
+				<br /><br />
 
-			<hr />
+				{devMode && <hr />}
 
 
-			{/* PARTE INFERIOR (ERRORES) */}
-			{
-				errors && errors.length > 0 && (
-					<div className='outerContainer'>
-						<div>
-							<h2>ERRORES DE SINTAXIS</h2>
-							<div className='errorLog'>
-								<ul>
-									{
-										errors.map((inputError, index) => {
-											return (
-												<li key={`error-${index}`}>
-													Error de sintaxis en la <b>Línea {inputError.line} (la {inputError.lineFromBottom}ª desde abajo)</b>:
-													"{inputError.text || '(línea vacía)'}"
-												</li>
-											)
+				{/* PARTE INFERIOR (ERRORES) */}
+				{
+					errors && errors.length > 0 && (
+						<div className='outerContainer'>
+							<div>
+								<h2>ERRORES DE SINTAXIS</h2>
+								<div className='errorLog'>
+									<ul>
+										{
+											errors.map((inputError, index) => {
+												return (
+													<li key={`error-${index}`}>
+														Error de sintaxis en la <b>Línea {inputError.line} (la {inputError.lineFromBottom}ª desde abajo)</b>:
+														"{inputError.text || '(línea vacía)'}"
+													</li>
+												)
 
-										})
-									}
-								</ul>
+											})
+										}
+									</ul>
+								</div>
 							</div>
 						</div>
-					</div>
-				)
-			}
-			{devMode && <hr />}
+					)
+				}
 
-			{/* PARTE INFERIOR (output JSON) */}
-			{
-				devMode && (
-					<div style={{ textAlign: 'center' }}>
-						<h2>JSON Output</h2>
-						<div>{JSON.stringify(storyData)}</div>
-					</div>
-				)
-			}
+				{devMode && <hr />}
 
-			<hr />
+				{/* PARTE INFERIOR (output JSON) */}
+				{
+					devMode && (
+						<div style={{ textAlign: 'center' }}>
+							<h2>JSON Output</h2>
+							<div>{JSON.stringify(storyData)}</div>
+						</div>
+					)
+				}
 
-			<div className='imageExports' ref={imageExportsRef} />
+				<hr />
 
-			<ToastContainer />
+				<div className='imageExports' ref={imageExportsRef} />
+
+				<ToastContainer />
+			</main>
 		</>
 	)
 }

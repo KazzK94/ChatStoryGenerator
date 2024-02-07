@@ -34,6 +34,9 @@ Para los no desarrolladores, no hay problema si activáis este modo, pero no cre
 
 ## Ideas de cara a futuro
 
+### Implementar useContext()
+Se debe implementar useContext() de inmediato para gestionar todas las variables del formulario.
+
 ### Resolver Bugs
 
 #### Deformación en la imagen si no es cuadrada
