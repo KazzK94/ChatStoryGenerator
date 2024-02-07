@@ -8,7 +8,7 @@ export default function Header({ onTitleClick, children, onLoadDefaultStory }) {
 		<header className='header container'>
 			<h1 onClick={onTitleClick}>
 				<img src='/csg-logo.png' alt='Chat Story Generator Logo' />
-				Chat Story Generator
+				<span className='titleText'>Chat Story Generator</span>
 			</h1>
 			<div className='configButtons'>
 				<div>
@@ -16,12 +16,13 @@ export default function Header({ onTitleClick, children, onLoadDefaultStory }) {
 						color='#fff'
 						backgroundColor='#86bb'
 						onClick={() => {
-							if (confirm('¿Quieres cargar el texto de ejemplo? Tu texto actual se borrará.')) {
+							if (confirm('[SOLO PARA PRUEBAS]\n¿Quieres cargar el texto de ejemplo? Tu texto actual se borrará.')) {
 								onLoadDefaultStory()
 							}
 						}}
 					>
-						Cargar texto de ejemplo (sólo para pruebas)
+						<span className='display-md'>Cargar texto de ejemplo (sólo para pruebas)</span>
+						<span className='display-sm-only'>Cargar texto ejemplo</span>
 					</Button>
 				</div>
 			</div>

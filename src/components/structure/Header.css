@@ -32,3 +32,27 @@ header.header {
 		border-color: #bbb;
 	}
 }
+
+
+.titleText {
+	display: none;
+}
+
+.display-sm-only, .display-md {
+	display: none;
+}
+@media (width <=768px) {
+	.display-sm-only {
+		display: inherit;
+	}
+}
+
+@media (768px < width) {
+	.titleText {
+		display: inherit;
+	}
+
+	.display-md {
+		display: inherit;
+	}
+}
